@@ -17,8 +17,8 @@
 
 | **SRID**      | **Name**         | **Usage**                         | **Example**                        |
 |:-------------:|:----------------|:----------------------------------|:-----------------------------------|
-| **4326**      | WGS84 (Lat/Lon) | 🌍 Storage & analysis (default)   | `geometry(Point, 4326)`            |
-| **3857**      | Web Mercator    | 🗺️ Map visualisation only         | `ST_Transform(geom, 3857)`         |
+| **4326**      | WGS84 (Lat/Lon) | 🌍 Storage & analysis (default)   | `geometry(Polygon, 4326)`            |
+| **3857**      | Web Mercator    | 🗺️ Map visualisation only         | `geometry(Polygon, 3857)`         |
 
 > **💡 Tip:**  
 > Store spatial data as **geometry (EPSG:4326)** unless you _really_ need geography for speed (e.g. MAPP queries).
