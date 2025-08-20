@@ -139,22 +139,22 @@ CREATE INDEX sidx_my_table_geom_p_4326_3857 ON my_table USING GIST (ST_Transform
 SELECT a.id, b.id
 FROM table_a a
 LEFT JOIN table_b b
-    ON ST_Intersects(a.geom_p_4326, b.geom_4326);
+    ON ST_Intersects(a.geom_p_4326, b.geom_4326); -- point in polygon
 
 -- Within buffer (1000 meters)
 SELECT a.id, b.id
 FROM table_a a
 LEFT JOIN table_b b
-    ON ST_DWithin(a.geom_p_4326::geography, b.geom_4326::geography, 1000);
+    ON ST_DWithin(a.geom_p_4326::geography, b.geom_p_4326::geography, 1000); -- point to (buffered) point
 
 -- Intersection geometry
 SELECT a.id, b.id, ST_Intersection(a.geom_p_4326, b.geom_p_4326) AS intersection_geom
 FROM table_a a
 LEFT JOIN table_b b
-    ON ST_Intersects(a.geom_p_4326, b.geom_p_4326);
+    ON ST_Intersects(a.geom_4326, b.geom_4326); -- intersection of 2 polygons
 
 -- Buffer with smooth edges
-SELECT ST_Buffer(geom, 1000, 64) AS buffered_geom
+SELECT ST_Buffer(geom, 1000, 64) AS buffered_geom -- 64 parameter increase the number of nodes for a smoother circle
 FROM table_name;
 ```
 
