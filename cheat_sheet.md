@@ -138,19 +138,19 @@ CREATE INDEX sidx_my_table_geom_p_4326_3857 ON my_table USING GIST (ST_Transform
 -- Intersecting geometries
 SELECT a.id, b.id
 FROM table_a a
-JOIN table_b b
+LEFT JOIN table_b b
     ON ST_Intersects(a.geom_p_4326, b.geom_4326);
 
 -- Within buffer (1000 meters)
 SELECT a.id, b.id
 FROM table_a a
-JOIN table_b b
+LEFT JOIN table_b b
     ON ST_DWithin(a.geom_p_4326::geography, b.geom_4326::geography, 1000);
 
 -- Intersection geometry
 SELECT a.id, b.id, ST_Intersection(a.geom_p_4326, b.geom_p_4326) AS intersection_geom
 FROM table_a a
-JOIN table_b b
+LEFT JOIN table_b b
     ON ST_Intersects(a.geom_p_4326, b.geom_p_4326);
 
 -- Buffer with smooth edges
@@ -166,12 +166,12 @@ Find the closest feature using `CROSS JOIN LATERAL` and `<->` operator:
 
 ```sql
 SELECT a.id, nearest.id, 
-       ST_Distance(a.geom_p_4326::geography, nearest.geom_4326::geography) AS distance_metres
+       ST_Distance(a.geom_p_4326::geography, nearest.geom_p_4326::geography) AS distance_metres
 FROM table_a a
 CROSS JOIN LATERAL (
     SELECT b.id
     FROM table_b b
-    ORDER BY a.geom_p_4326::geography <-> b.geom_4326::geography
+    ORDER BY a.geom_p_4326::geography <-> b.geom_p_4326::geography
     LIMIT 1
 ) nearest;
 ```
