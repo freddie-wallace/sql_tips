@@ -148,7 +148,7 @@ LEFT JOIN table_b b
     ON ST_DWithin(a.geom_p_4326::geography, b.geom_p_4326::geography, 1000); -- point to (buffered) point
 
 -- Intersection geometry
-SELECT a.id, b.id, ST_Intersection(a.geom_p_4326, b.geom_p_4326) AS intersection_geom
+SELECT a.id, b.id, ST_Intersection(a.geom_4326, b.geom_4326) AS intersection_geom_4326
 FROM table_a a
 LEFT JOIN table_b b
     ON ST_Intersects(a.geom_4326, b.geom_4326); -- intersection of 2 polygons
